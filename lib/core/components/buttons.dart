@@ -14,6 +14,7 @@ class Button extends StatelessWidget {
   final Color textColor;
   final bool disable;
   final double fontSize;
+  final bool isLoading;
 
   const Button({
     super.key,
@@ -27,6 +28,7 @@ class Button extends StatelessWidget {
     this.icon,
     this.disable = false,
     this.fontSize = 18,
+    this.isLoading = false,
   });
 
   @override
@@ -41,21 +43,29 @@ class Button extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null) ...[icon!, const SizedBox(width: 8)],
-            Text(
-              label,
-              style: TextStyle(
-                color: textColor,
-                fontSize: fontSize,
-                fontWeight: FontWeight.w600,
+        ),        child: isLoading 
+            ? SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: textColor,
+                  strokeWidth: 2,
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null) ...[icon!, const SizedBox(width: 8)],
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: fontSize,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

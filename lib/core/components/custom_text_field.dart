@@ -21,7 +21,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.prefixIcon,
     this.suffixIcon,
-    this.maxLines = 1,
+    this.maxLines = 1, required FocusNode focusNode, required TextInputAction textInputAction, required void Function(dynamic _) onFieldSubmitted, required String? Function(String? value) validator,
   });
 
   @override

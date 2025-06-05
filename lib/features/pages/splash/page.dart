@@ -1,9 +1,8 @@
-// import 'package:absensi_app/core/core.dart';
 import 'package:absen/core/extensions/build_context_ext.dart';
 import 'package:absen/features/pages/login/page.dart';
+import 'package:absen/features/pages/home/main_page.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:absensi_app/core/core.dart';
+import 'package:absen/features/pages/login/service/auth_token_cache.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,14 +11,29 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> {  @override
+  void initState() {
+    super.initState();
+    _checkAuthAndNavigate();
+  }
+
+  Future<void> _checkAuthAndNavigate() async {
+    final authCache = await AuthTokenCache.create();
+    
+    // Add a small delay for splash screen visibility
+    await Future.delayed(const Duration(seconds: 2));
+    
+    if (mounted) {
+      if (authCache.isLoggedIn()) {
+        context.pushReplacement(const MainPage());
+      } else {
+        context.pushReplacement(const LoginPage());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future.delayed(
-      const Duration(seconds: 2),
-          () => context.pushReplacement(
-          const LoginPage()),
-    );
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
